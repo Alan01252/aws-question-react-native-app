@@ -1,0 +1,2 @@
+export const LOAD_QUESTIONS = 'LOAD_QUESTIONS'
+export const NEXT_QUESTION = 'NEXT_QUESTION'
