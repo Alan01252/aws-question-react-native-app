@@ -1,23 +1,21 @@
 import React from 'react';
 import {Font} from 'expo';
 import Question from "./src/Question/Question";
-import {View} from "native-base";
 import {Provider} from 'react-redux'
 import {createStore} from 'redux'
 import questionApp from './reducers'
+import Expo from 'expo';
+import {View} from "react-native";
 
 
 export default class App extends React.Component {
 
-    state = {
-        fontLoaded: false,
-    };
 
     constructor() {
         super();
         this.state = {
-            isLoading: false,
-            store: createStore(questionApp),
+            fontLoaded: false,
+            store: createStore(questionApp)
         };
     }
 
@@ -25,12 +23,19 @@ export default class App extends React.Component {
     async componentDidMount() {
         await Font.loadAsync({
             'nixie-one-regular': require('./assets/fonts/NixieOne-Regular.ttf'),
+            'Roboto': require('native-base/Fonts/Roboto.ttf'),
+            'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
         });
 
         this.setState({fontLoaded: true})
     }
 
     render() {
+
+
+        if (!this.state.fontLoaded) {
+            return <Expo.AppLoading/>
+        }
 
         return (
             <Provider store={this.state.store}>

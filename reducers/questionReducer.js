@@ -1,12 +1,14 @@
 import questions from './questions';
 import hash from "object-hash";
-import {LOAD_QUESTIONS} from "../constants";
+import {ANSWER_QUESTION, LOAD_QUESTIONS, NEXT_EXPLANATION, NEXT_QUESTION} from "../constants";
 
 
 const initialState = {
     currentQuestion: 0,
+    currentExplanation: -1,
     questions: questions,
     questionsLoaded: false,
+    chosenAnswer: null,
 };
 
 
@@ -28,16 +30,24 @@ export default function dataReducer(state = initialState, action) {
                 questions: hashQuestions(state.questions),
                 questionsLoaded: true
             };
-        case 'NEXT_QUESTION':
+        case NEXT_QUESTION:
             return {
                 ...state,
-                currentQuestion: state.currentQuestion + 1
+                currentQuestion: state.currentQuestion + 1,
+                chosenAnswer: 0
             };
-        case 'PREVIOUS_QUESTION':
+        case NEXT_EXPLANATION:
             return {
                 ...state,
-                currentQuestion: state.currentQuestion - 1
+                currentExplanation: state.currentExplanation + 1
             };
+        case ANSWER_QUESTION:
+            const newState = {
+                ...state,
+                chosenAnswer: action.answerId
+            }, question = newState.questions.find(x => x.hash === action.questionHash);
+            question.chosenAnswer = action.answerId;
+            return newState;
         default:
             return state
     }

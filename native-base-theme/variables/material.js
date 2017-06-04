@@ -22,7 +22,7 @@ export default {
   badgePadding: (platform === 'ios') ? 3 : 0,
 
     // Button
-  btnFontFamily: (platform === 'ios') ? 'Roboto' : 'Roboto_medium',
+  btnFontFamily: (platform === 'ios') ? 'Roboto' : 'Roboto',
   btnDisabledBg: '#b5b5b5',
   btnDisabledClr: '#f1f1f1',
 
@@ -265,7 +265,7 @@ export default {
 
 
     // Title
-  titleFontfamily: (platform === 'ios') ? 'Roboto' : 'Roboto_medium',
+  titleFontfamily: (platform === 'ios') ? 'Roboto' : 'Roboto',
   titleFontSize: 19,
   subTitleFontSize: 14,
   subtitleColor: '#FFF',

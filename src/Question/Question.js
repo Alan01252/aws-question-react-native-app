@@ -3,8 +3,9 @@ import {Body, Button, Card, CardItem, Col, Container, Content, Grid, H1, StylePr
 import styles from './style';
 import * as React from "react";
 import {connect} from 'react-redux';
-import {loadQuestions, nextQuestion} from "../../actions/actions";
-
+import {loadQuestions, nextQuestion, answerQuestion, nextExplanation} from "../../actions/actions";
+import AnswerOrExplanation from "./AnswerOrExplanation"
+import NextQuestionOrExplanation from "./NextQuestionOrExplanation";
 
 class Question extends React.Component {
 
@@ -20,12 +21,20 @@ class Question extends React.Component {
 
     render() {
 
-        const {questions, currentQuestion, questionsLoaded, onNextClick} = this.props;
+        const {
+            questions,
+            currentQuestion,
+            currentExplanation,
+            questionsLoaded,
+            onNextQuestionClick,
+            onNextExplanationClick,
+            onAnswerClick
+        } = this.props;
 
         if (!questionsLoaded) {
-            console.log("Questions not loaded yet");
             return null;
         }
+
 
         return (
             <Container style={styles.container}>
@@ -33,7 +42,7 @@ class Question extends React.Component {
                 <Content>
                     <Card>
                         <CardItem header style={styles.header}>
-                            <H1 style={styles.h1}>Question {currentQuestion} of 20</H1>
+                            <H1>{"Question " + (currentQuestion + 1)}</H1>
                         </CardItem>
                         <CardItem style={styles.questionContainer}>
                             <Body>
@@ -43,27 +52,24 @@ class Question extends React.Component {
                             </Body>
                         </CardItem>
 
-                        {questions[currentQuestion].answers.map(function (answer, i) {
-                            return <CardItem>
-                                <Grid>
-                                    <Col size={1}>
-                                        <Button dark outline bordered full style={styles.questionButton}>
-                                            <Text>{answer.text}</Text>
-                                        </Button>
-                                    </Col>
-                                </Grid>
-                            </CardItem>
-                        })}
+                        <AnswerOrExplanation
+                            answers={questions[currentQuestion].answers}
+                            questionHash={questions[currentQuestion].hash}
+                            correctAnswer={questions[currentQuestion].correctAnswer}
+                            chosenAnswer={questions[currentQuestion].chosenAnswer}
+                            currentExplanation={currentExplanation}
+                            currentQuestion={currentQuestion}
+                            onAnswerClick={onAnswerClick}
+                        />
 
-                        <CardItem>
-                            <Grid>
-                                <Col size={1}>
-                                    <Button primary style={styles.rightButton} onPress={() => onNextClick()}>
-                                        <Text style={styles.text}>Next</Text>
-                                    </Button>
-                                </Col>
-                            </Grid>
-                        </CardItem>
+
+                        <NextQuestionOrExplanation
+                            currentExplanation={currentExplanation}
+                            currentQuestion={currentQuestion}
+                            onNextQuestionClick={onNextQuestionClick}
+                            onNextExplanationClick={onNextExplanationClick}
+                        />
+
                     </Card>
                 </Content>
             </Container>
@@ -71,23 +77,23 @@ class Question extends React.Component {
     }
 }
 
-// Maps state from store to props
 const mapStateToProps = (state, ownProps) => {
 
-    console.log(state);
-
     return {
+        questions: state.appData.questions,
+        chosenAnswer: state.appData.chosenAnswer,
         currentQuestion: state.appData.currentQuestion,
-        questionsLoaded: state.appData.questionsLoaded,
-        questions: state.appData.questions
+        currentExplanation: state.appData.currentExplanation,
+        questionsLoaded: state.appData.questionsLoaded
     }
 };
 
-// Maps actions to props
 const mapDispatchToProps = (dispatch) => {
     return {
         loadQuestions: () => dispatch(loadQuestions()),
-        onNextClick: () => dispatch(nextQuestion())
+        onNextQuestionClick: () => dispatch(nextQuestion()),
+        onNextExplanationClick: () => dispatch(nextExplanation()),
+        onAnswerClick: (questionHash, answerId) => dispatch(answerQuestion(questionHash, answerId))
     }
 };
 

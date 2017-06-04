@@ -6,11 +6,12 @@ export default {
         paddingBottom: 0,
         margin: 0
     },
+    chosenAnswer: {
+        backgroundColor: "green"
+    },
     h1: {
         color: '#0b203a',
-        fontSize: 21,
-        padding: 0,
-        margin: 0
+        fontSize: 21
     },
     content: {
         color: '#0b203a',
