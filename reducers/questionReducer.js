@@ -9,6 +9,7 @@ const initialState = {
     questions: questions,
     questionsLoaded: false,
     chosenAnswer: null,
+    quizEnded: false
 };
 
 
@@ -31,10 +32,19 @@ export default function dataReducer(state = initialState, action) {
                 questionsLoaded: true
             };
         case NEXT_QUESTION:
+
+            let quizEnded = false;
+            if (state.currentQuestion + 1 >= state.questions.length) {
+                quizEnded = true
+            }
+
+            console.log("quiz ended" + quizEnded);
+
             return {
                 ...state,
                 currentQuestion: state.currentQuestion + 1,
-                chosenAnswer: 0
+                chosenAnswer: 0,
+                quizEnded: quizEnded
             };
         case NEXT_EXPLANATION:
             return {

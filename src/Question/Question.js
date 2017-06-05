@@ -36,9 +36,10 @@ class Question extends React.Component {
         }
 
 
+
+
         return (
             <Container style={styles.container}>
-                <StatusBar hidden/>
                 <Content>
                     <Card>
                         <CardItem header style={styles.header}>
@@ -59,6 +60,7 @@ class Question extends React.Component {
                             chosenAnswer={questions[currentQuestion].chosenAnswer}
                             currentExplanation={currentExplanation}
                             currentQuestion={currentQuestion}
+                            explanation={questions[currentQuestion].explanation}
                             onAnswerClick={onAnswerClick}
                         />
 
@@ -84,7 +86,7 @@ const mapStateToProps = (state, ownProps) => {
         chosenAnswer: state.appData.chosenAnswer,
         currentQuestion: state.appData.currentQuestion,
         currentExplanation: state.appData.currentExplanation,
-        questionsLoaded: state.appData.questionsLoaded
+        questionsLoaded: state.appData.questionsLoaded,
     }
 };
 

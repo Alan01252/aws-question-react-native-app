@@ -14,11 +14,14 @@ class AnswerOrExplanation extends React.Component {
     render() {
 
 
-        const {answers, questionHash, correctAnswer, chosenAnswer, currentQuestion, currentExplanation, onAnswerClick} = this.props;
+        const {
+            answers, questionHash, correctAnswer, chosenAnswer, currentQuestion, currentExplanation, explanation,
+            onAnswerClick
+        } = this.props;
 
 
         if (currentQuestion === currentExplanation) {
-            return <Explanation/>
+            return <Explanation correctAnswer={correctAnswer} chosenAnswer={chosenAnswer} explanation={explanation}/>
         }
 
         return <View>

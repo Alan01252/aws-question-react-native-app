@@ -2,7 +2,7 @@ import {Button, Card, CardItem, Col, Grid, Text} from "native-base";
 import * as React from "react";
 
 
-class Explanation extends React.Component {
+class Summary extends React.Component {
 
     constructor(props) {
         super(props);
@@ -11,14 +11,10 @@ class Explanation extends React.Component {
 
     render() {
 
-        const {correctAnswer, chosenAnswer, explanation} = this.props;
-
-        // TODO Turn card item border green if correct / red if not quite
-
         return <CardItem>
             <Grid>
                 <Col size={1}>
-                    <Text>{explanation}</Text>
+                    <Text>Some summary stuff here</Text>
                 </Col>
             </Grid>
         </CardItem>
@@ -27,4 +23,4 @@ class Explanation extends React.Component {
     }
 }
 
-export default Explanation
+export default Summary

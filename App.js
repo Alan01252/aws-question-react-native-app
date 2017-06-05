@@ -1,11 +1,12 @@
 import React from 'react';
 import {Font} from 'expo';
-import Question from "./src/Question/Question";
 import {Provider} from 'react-redux'
 import {createStore} from 'redux'
 import questionApp from './reducers'
 import Expo from 'expo';
-import {View} from "react-native";
+import {StatusBar, View} from "react-native";
+
+import QuestionOrSummary from "./src/QuestionOrSummary/QuestionOrSummary";
 
 
 export default class App extends React.Component {
@@ -40,7 +41,8 @@ export default class App extends React.Component {
         return (
             <Provider store={this.state.store}>
                 <View style={{flex: 1}}>
-                    <Question/>
+                    <StatusBar hidden/>
+                    <QuestionOrSummary/>
                 </View>
             </Provider>
         );
