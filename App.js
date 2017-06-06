@@ -40,7 +40,7 @@ export default class App extends React.Component {
 
         return (
             <Provider store={this.state.store}>
-                <View style={{flex: 1}}>
+                <View key="main" style={{flex: 1}}>
                     <StatusBar hidden/>
                     <QuestionOrSummary/>
                 </View>

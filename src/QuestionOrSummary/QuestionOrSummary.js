@@ -18,9 +18,11 @@ class QuestionOrSummary extends React.Component {
 
         console.log("In here" + quizEnded);
 
+        /*
         if (!quizEnded) {
             return <Question/>
         }
+        */
 
         return <Summary/>
     }
