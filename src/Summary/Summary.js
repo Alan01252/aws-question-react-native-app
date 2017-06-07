@@ -24,12 +24,12 @@ class Summary extends React.Component {
     render() {
 
         let data = [[
-            {axis: "Compute", value: 74},
+            {axis: "Compute", value: 10},
             {axis: "Database", value: 74},
-            {axis: "Networking", value: 74},
-            {axis: "Migration", value: 74},
+            {axis: "Networking", value: 20},
+            {axis: "Migration", value: 50},
             {axis: "Developer Tools", value: 74},
-            {axis: "Security, Identity & Compliance", value: 74}
+            {axis: "Security, Identity & Compliance", value: 64}
         ]];
 
 
@@ -66,41 +66,30 @@ class Summary extends React.Component {
             }))
         }));
 
+
+        var newX = -85;
+        var newY = 20;
+        var baselineY = 50;
+        var chartWidth = width;
+        var chartHeight = height;
+        var offset = 0;
+
+
         var rScale = d3.scaleLinear()
             .range([0, radius])
             .domain([0, maxValue]);
 
         //The radial line function
-        var radarLine = d3.line()
-            .x(function (d) {
-                return d.x
-            })
-            .y(function (d, i) {
-                return d.y
-            })
-            .curve(d3.curveCardinalClosed);
 
-        var dataArray = [{x: 120, y: 5}, {x: 10, y: 15}, {x: 20, y: 7}, {x: 30, y: 18}, {x: 40, y: 10}];
-        var line1 = radarLine(dataArray);
+        var radarLine = d3.radialLine()
+            .curve(d3.curveCardinalClosed)
+            .radius(function(d) { return rScale(d.value); })
+            .angle(function(d,i) {	return i*angleSlice - offset; });
 
-
-
-        var radarLine = d3.line()
-            .x(function (d, i) {
-                return rScale(d.value)
-            })
-            .y(function (d, i) {
-                return rScale(i)
-            })
-            .curve(d3.curveCardinalClosed);
-
-
-
-
-        var line2 = radarLine(data[0]);
-
+        var line1 = radarLine(data[0]);
         console.log(line1);
-        console.log(line2);
+
+
 
         return <View key="chart" style={{display: "flex", flex: 1}} onLayout={this.onLayout}>
 
@@ -131,8 +120,8 @@ class Summary extends React.Component {
                             </G>
                         })}
                         <G class="radarArea">
-                            <Path d={line2} strokeWidth="5" stroke="red"
-                                  fill="red"/>
+                            <Path x="0" y="0" d={line1} strokeWidth="5" stroke="red"
+                                  fill="none"/>
                         </G>
                     </G>
                 </Svg> : undefined
