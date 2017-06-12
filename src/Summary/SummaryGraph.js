@@ -29,7 +29,7 @@ class SummaryGraph extends React.Component {
             {axis: "Networking", value: 20},
             {axis: "Migration", value: 50},
             {axis: "Developer Tools", value: 74},
-            {axis: "Security, Identity & Compliance", value: 64}
+            {axis: "Security", value: 64}
         ]];
 
 
@@ -53,7 +53,7 @@ class SummaryGraph extends React.Component {
             height: 111,
             margin: margin,
             maxValue: 100, //What is the value that the biggest circle will represent
-            labelFactor: 1.45, 	//How much farther than the radius of the outer circle should the labels be placed
+            labelFactor: 1.5, 	//How much farther than the radius of the outer circle should the labels be placed
             levels: 3
         }
 
@@ -100,6 +100,25 @@ class SummaryGraph extends React.Component {
 
         console.log(Array(3).keys());
 
+        var createAxisString = (axis, i) => {
+
+
+            return axis.split(" ").map((text,j) => {
+
+                console.log(text);
+
+
+                return <Text key={"legend" + text + i}
+                             textAnchor="middle"
+                             dy="0.35em"
+                             x={rScale(maxValue * cfg.labelFactor) * Math.cos(angleSlice * i - Math.PI / 2)}
+                             y={(rScale(maxValue * cfg.labelFactor) * Math.sin(angleSlice * i - Math.PI / 2)) + (j*15)}
+                >
+                    {text}
+                </Text>
+            })
+
+        };
 
         return <Container style={{height: 180}} onLayout={this.onLayout}>
             {
@@ -109,8 +128,10 @@ class SummaryGraph extends React.Component {
                         <G class="axisWrapper">
 
                             {Array.apply(null, Array(cfg.levels)).map(function (_, i) {
-                                return <G><Circle cx="0" cy="0" class="gridCircle" r={radius / cfg.levels * (i + 1)}
-                                                  fill="#CDCDCD" stroke="#CDCDCD" fillOpacity="0.1"/>
+                                return <G key={"g-axis" + i}><Circle cx="0" cy="0" class="gridCircle"
+                                                                     r={radius / cfg.levels * (i + 1)}
+
+                                                                     fill="#CDCDCD" stroke="#CDCDCD" fillOpacity="0.1"/>
                                     <Text
                                         fontSize="5"
                                         dy="0.4em"
@@ -129,14 +150,8 @@ class SummaryGraph extends React.Component {
                                       x2={rScale(maxValue * 1.1) * Math.cos(angleSlice * i - Math.PI / 2)}
                                       y2={rScale(maxValue * 1.1) * Math.sin(angleSlice * i - Math.PI / 2)}
                                 />
-                                <Text key={"legend" + i}
-                                      textAnchor="middle"
-                                      dy="0.35em"
-                                      x={rScale(maxValue * cfg.labelFactor) * Math.cos(angleSlice * i - Math.PI / 2)}
-                                      y={rScale(maxValue * cfg.labelFactor) * Math.sin(angleSlice * i - Math.PI / 2)}
-                                >
-                                    {axis}
-                                </Text>
+                                {createAxisString(axis, i)}
+
                             </G>
                         })}
                         <G class="radarArea">
