@@ -1,8 +1,7 @@
 export default [{
     tag: 'Storage',
-    question: 'A company is trying to reduce their storage costs and want a more cost effective solution than Amazon S3.\ ' +
-    'Secondly they claim that their data store is not frequently accessed. What is the best and cost efficient solution ' +
-    'that should be considered?',
+    question: 'Which of the below storage solutions would provide the most cost effective options for customers to' +
+    'store data which isn\'t required to be accessed frequently',
     answers: [
         {
             id: 0,
@@ -23,31 +22,33 @@ export default [{
     ],
     correctAnswer: 1,
     chosenAnswer: null,
-    explanation: 'The correct answer is Amazon Glacier because xx'
+    explanation: 'Amazon Glacier is Amazons low-cost cloud storage solution for data archiving and long-term backup of data.' +
+    '\n\nPrices range from as a little as $0.004 per gigabyte per month.\n\nAmazon Glacier provides three options for access to archives' +
+    ', from a few minutes to several hours'
 }, {
-    tag: 'Networking',
-    question: 'A VPC has been setup with public subnet and an internet gateway. You setup an EC2 instance with a' +
-    ' public IP. But you are still not able to connect to it via the Internet. You can see that the right Security' +
-    ' groups are in place. What should you do to ensure you can connect to the EC2 instance from the internet',
+    tag: 'Storage',
+    question: 'How much does it cost to transfer data from EC2 to S3 assuming they are in the same region.',
     answers: [
         {
             id: 0,
-            text: 'Set an Elastic IP Address to the EC2 instance',
+            text: 'There is no cost for inter-region data transfer between EC2 to S3 ',
         },
         {
             id: 1,
-            text: 'Set a Secondary Private IP Address to the EC2 instance',
+            text: 'There is a charge of $0.020 per gigabyte',
         },
         {
             id: 2,
-            text: 'Set a Secondary Private IP Address to the EC2 instance',
+            text: 'It is free for up to 10 gigabytes of data',
         },
         {
             id: 3,
-            text: 'There must be some issue in the EC2 instance.',
+            text: 'It is impossible to transfer data between EC2 and S3',
         }
     ],
     correctAnswer: 0,
     chosenAnswer: null,
-    explanation: 'The correct answer is Amazon Glacier because xx'
+    explanation: 'There is no charge for inter-region data transfer between EC2 and S3.\n\nFor example there is no charge ' +
+    'between an S3 bucket in eu-central-1 and an instance running in the availability zone eu-central-1a.\n\nData transferred ' +
+    'between AWS services in different regions will be charged as Internet Data Transfer on both sides of the transfer'
 }]

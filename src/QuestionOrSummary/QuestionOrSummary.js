@@ -13,10 +13,7 @@ class QuestionOrSummary extends React.Component {
 
     render() {
 
-
         const {quizEnded} = this.props;
-
-        console.log("In here" + quizEnded);
 
         if (!quizEnded) {
             return <Question/>

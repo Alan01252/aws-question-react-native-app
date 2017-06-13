@@ -7,6 +7,7 @@ import Expo from 'expo';
 import {StatusBar, View} from "react-native";
 
 import QuestionOrSummary from "./src/QuestionOrSummary/QuestionOrSummary";
+import {Body, Button, Header, Icon, Left, Right, Subtitle, Title} from "native-base";
 
 
 export default class App extends React.Component {
@@ -42,6 +43,17 @@ export default class App extends React.Component {
             <Provider store={this.state.store}>
                 <View key="main" style={{flex: 1}}>
                     <StatusBar hidden/>
+                    <Header>
+                        <Left>
+                            <Button transparent>
+                                <Icon name='menu'/>
+                            </Button>
+                        </Left>
+                        <Body>
+                        <Title>Cloud Courses</Title>
+                        </Body>
+                        <Right/>
+                    </Header>
                     <QuestionOrSummary/>
                 </View>
             </Provider>
