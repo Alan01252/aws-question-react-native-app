@@ -1,6 +1,7 @@
 import * as React from "react";
 import Svg, {Circle, Rect, G, Line, Text, Path} from 'react-native-svg'
 import {Card, CardItem, Container, Content, H1} from "native-base";
+import {questions} from "../../reducers/questions";
 
 var d3 = require("d3");
 
@@ -21,16 +22,46 @@ class SummaryGraph extends React.Component {
     }
 
 
+    populateDataValues(data) {
+
+        const {questions} = this.props;
+
+        return data.map((item) => {
+            let itemScore = questions.reduce((acc, question) => {
+                if (question.tag === item.axis
+                    && question.chosenAnswer === question.correctAnswer) {
+                    acc = acc + 1
+                }
+                return acc
+            }, 0);
+
+            let totalScore = questions.reduce((acc, question) => {
+                if (question.tag === item.axis) {
+                    acc = acc + 1;
+                }
+                return acc
+            }, 0);
+
+            if (totalScore) {
+                item.value = Math.floor((itemScore / totalScore) * 100);
+            }
+            return item;
+        });
+    }
+
+
     render() {
 
         let data = [[
-            {axis: "Compute", value: 10},
-            {axis: "Database", value: 74},
-            {axis: "Networking", value: 20},
-            {axis: "Migration", value: 50},
-            {axis: "Developer Tools", value: 74},
-            {axis: "Security", value: 64}
+            {axis: "Compute", value: 0},
+            {axis: "Database", value: 0},
+            {axis: "Networking", value: 0},
+            {axis: "Migration", value: 0},
+            {axis: "Storage", value: 0},
+            {axis: "Security", value: 0}
         ]];
+
+        data[0] = this.populateDataValues(data[0]);
 
 
         width = 700;
@@ -58,9 +89,6 @@ class SummaryGraph extends React.Component {
         }
 
 
-        console.log(cfg);
-        console.log(d3);
-
         var allAxis = (data[0].map(function (i, j) {
             return i.axis
         }));
@@ -69,7 +97,6 @@ class SummaryGraph extends React.Component {
         var Format = d3.format('.0%');
         var angleSlice = Math.PI * 2 / total;
 
-        console.log("Angle slice" + angleSlice);
 
         var maxValue = Math.max(cfg.maxValue, d3.max(data, function (i) {
             return d3.max(i.map(function (o) {
@@ -77,8 +104,6 @@ class SummaryGraph extends React.Component {
             }))
         }));
 
-
-        console.log("Max Value" + maxValue);
 
         var offset = 0;
         var rScale = d3.scaleLinear()
@@ -98,21 +123,17 @@ class SummaryGraph extends React.Component {
 
         var line1 = radarLine(data[0]);
 
-        console.log(Array(3).keys());
 
         var createAxisString = (axis, i) => {
 
 
-            return axis.split(" ").map((text,j) => {
-
-                console.log(text);
-
+            return axis.split(" ").map((text, j) => {
 
                 return <Text key={"legend" + text + i}
                              textAnchor="middle"
                              dy="0.35em"
                              x={rScale(maxValue * cfg.labelFactor) * Math.cos(angleSlice * i - Math.PI / 2)}
-                             y={(rScale(maxValue * cfg.labelFactor) * Math.sin(angleSlice * i - Math.PI / 2)) + (j*15)}
+                             y={(rScale(maxValue * cfg.labelFactor) * Math.sin(angleSlice * i - Math.PI / 2)) + (j * 15)}
                 >
                     {text}
                 </Text>

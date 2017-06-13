@@ -24,11 +24,30 @@ export default function dataReducer(state = initialState, action) {
         })
     };
 
+    /**
+     * Randomize array element order in-place.
+     * Using Durstenfeld shuffle algorithm.
+     */
+    const shuffleAnswers = (questions) => {
+
+        return questions.map((question) => {
+            for (var i = question.answers.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = question.answers[i];
+                question.answers[i] = question.answers[j];
+                question.answers[j] = temp;
+            }
+            return {
+                ...question
+            }
+        })
+    }
+
     switch (action.type) {
         case LOAD_QUESTIONS:
             return {
                 ...state,
-                questions: hashQuestions(state.questions),
+                questions: shuffleAnswers(hashQuestions(state.questions)),
                 questionsLoaded: true
             };
         case NEXT_QUESTION:

@@ -1,5 +1,5 @@
 export default [{
-    tag: 'S3',
+    tag: 'Storage',
     question: 'A company is trying to reduce their storage costs and want a more cost effective solution than Amazon S3.\ ' +
     'Secondly they claim that their data store is not frequently accessed. What is the best and cost efficient solution ' +
     'that should be considered?',
@@ -25,8 +25,8 @@ export default [{
     chosenAnswer: null,
     explanation: 'The correct answer is Amazon Glacier because xx'
 }, {
-    tag: 'VPC',
-    question: 'A VPC has been setup with public subnet and an internet gateway. You setup and EC2 instance with a' +
+    tag: 'Networking',
+    question: 'A VPC has been setup with public subnet and an internet gateway. You setup an EC2 instance with a' +
     ' public IP. But you are still not able to connect to it via the Internet. You can see that the right Security' +
     ' groups are in place. What should you do to ensure you can connect to the EC2 instance from the internet',
     answers: [
@@ -44,7 +44,7 @@ export default [{
         },
         {
             id: 3,
-            text: 'There must be some issue in the EC2 instance. Check the system logs.',
+            text: 'There must be some issue in the EC2 instance.',
         }
     ],
     correctAnswer: 0,

@@ -18,7 +18,7 @@ class Answer extends React.Component {
             <Grid>
                 <Col size={1}>
                     <Button dark outline bordered full
-                            style={chosenAnswer == answer.id ? styles.chosenAnswer : styles.questionButton}
+                            style={chosenAnswer === answer.id ? styles.chosenAnswer : styles.questionButton}
                             onPress={() => onAnswerClick(questionHash, answer.id)}
                     >
                         <Text>{answer.text}</Text>
